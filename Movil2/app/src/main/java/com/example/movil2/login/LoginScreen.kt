@@ -18,7 +18,6 @@ fun LoginScreen(
 
     var matricula by remember { mutableStateOf("") }
     var contrasenia by remember { mutableStateOf("") }
-    var tipoUsuario by remember { mutableStateOf("ALUMNO") }
 
     if (loginSuccess) {
         onLoginSuccess()
@@ -49,23 +48,6 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row {
-            listOf("ALUMNO", "DOCENTE").forEach { tipo ->
-                Row(
-                    modifier = Modifier.padding(end = 16.dp),
-                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = tipoUsuario == tipo,
-                        onClick = { tipoUsuario = tipo }
-                    )
-                    Text(tipo)
-                }
-            }
-        }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
@@ -73,7 +55,7 @@ fun LoginScreen(
                 if (matricula.isBlank() || contrasenia.isBlank()) {
                     viewModel.setError("Por favor, completa todos los campos")
                 } else {
-                    viewModel.login(matricula, contrasenia, tipoUsuario)
+                    viewModel.login(matricula, contrasenia, "ALUMNO")
                 }
             },
             enabled = !isLoading,

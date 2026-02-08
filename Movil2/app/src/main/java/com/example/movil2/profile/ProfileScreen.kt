@@ -24,7 +24,7 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top
     ) {
-        Text("DEBUG: Estado actual = ${uiState::class.simpleName}")
+        //Text("DEBUG: Estado actual = ${uiState::class.simpleName}")
 
         Text(
             "Perfil Académico",
