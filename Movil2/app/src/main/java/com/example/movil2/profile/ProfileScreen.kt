@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.json.JSONObject
-
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel) {
     val uiState by remember { derivedStateOf { viewModel.uiState } }
@@ -24,22 +23,23 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top
     ) {
-        //Text("DEBUG: Estado actual = ${uiState::class.simpleName}")
-
         Text(
             "Perfil Académico",
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         when (uiState) {
             is ProfileUiState.Loading -> {
                 CircularProgressIndicator()
             }
             is ProfileUiState.Error -> {
-                Text((uiState as ProfileUiState.Error).message, color = MaterialTheme.colorScheme.error)
+                Text(
+                    (uiState as ProfileUiState.Error).message,
+                    color = MaterialTheme.colorScheme.error
+                )
             }
             is ProfileUiState.Success -> {
                 val json = (uiState as ProfileUiState.Success).json
@@ -53,22 +53,45 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
                 val estatus = json.optString("estatus")
                 val fechaReins = json.optString("fechaReins")
 
-                Column(
+                Card(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
-                    Text("Nombre: $nombre")
-                    Text("Matrícula: $matricula")
-                    Text("Carrera: $carrera")
-                    Text("Especialidad: $especialidad")
-                    Text("Semestre actual: $semestre")
-                    Text("Créditos acumulados: $cdtosAcumulados")
-                    Text("Créditos actuales: $cdtosActuales")
-                    Text("Estatus: $estatus")
-                    Text("Fecha de reinscripción: $fechaReins")
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        ProfileItem("Nombre", nombre)
+                        ProfileItem("Matrícula", matricula)
+                        ProfileItem("Carrera", carrera)
+                        ProfileItem("Especialidad", especialidad)
+                        ProfileItem("Semestre actual", semestre.toString())
+                        ProfileItem("Créditos acumulados", cdtosAcumulados.toString())
+                        ProfileItem("Créditos actuales", cdtosActuales.toString())
+                        ProfileItem("Estatus", estatus)
+                        ProfileItem("Fecha de reinscripción", fechaReins)
+                    }
                 }
             }
         }
     }
 }
- 
+
+@Composable
+fun ProfileItem(label: String, value: String) {
+    Column {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Divider(modifier = Modifier.padding(vertical = 8.dp))
+    }
+}
