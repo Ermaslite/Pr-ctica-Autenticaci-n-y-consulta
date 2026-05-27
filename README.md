@@ -1,5 +1,5 @@
 Aplicación Android – Autenticación y Perfil SICENET
-y avance de evaluación 2: Sincronización de datos App SICEdRoid
+
 
 Descripción del proyecto
 
