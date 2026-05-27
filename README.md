@@ -1,4 +1,6 @@
 Aplicación Android – Autenticación y Perfil SICENET
+y avance de evaluación 2: Sincronización de datos App SICEdRoid
+
 Descripción del proyecto
 
 Esta aplicación móvil Android fue desarrollada como parte de la materia Móvil II  y tiene como objetivo permitir la autenticación de usuarios y la consulta del perfil académico a través de la plataforma SICENET, la cual expone sus servicios mediante un Web Service SOAP.
